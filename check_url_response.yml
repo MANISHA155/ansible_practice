@@ -1,0 +1,8 @@
+---
+- name: check apache response on all servers
+  uri:
+    url: "{{item}}"
+    status_code: 200
+  with_items:
+    - http://10.0.1.155
+    - http://10.0.1.44

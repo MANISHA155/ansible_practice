@@ -1,0 +1,15 @@
+---
+- name: create user using host scope varibles
+  hosts: 10.0.1.75
+  tasks:
+   - name: create user
+     user:
+      name: "{{a}}"
+      password: "{{b}}"
+      uid: "{{c}}"
+      home: "{{d}}"
+      shell: "{{e}}"
+  
+
+
+

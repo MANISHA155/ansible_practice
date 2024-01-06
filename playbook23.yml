@@ -1,0 +1,41 @@
+---
+- name: configure apache2 on Ubuntu and httpd on RHEEL  server's
+  hosts: all
+  tasks: 
+    - name: Install apache2 on Ubuntu servers
+      apt: 
+        name: apache2
+        state: present
+        update_cache: yes
+      when: ansible_distribution == "Ubuntu"
+    - name: Install httpd on RHEEL server
+      yum: 
+        name: httpd
+        state: present
+        update_cache: yes
+      when: ansible_distribution == "RedHat"
+    - name: edit the index.html file 
+      copy: 
+        content: "WELCOME CAR"
+        dest: /var/www/html/index.html
+    - name: restart apache2 on Ubuntu server
+      service: 
+        name: apache2
+        state: restarted
+      when: ansible_distribution == "Ubuntu"
+    - name: restart httpd on RHEEL server
+      service: 
+        name: httpd
+        state: restarted 
+      when: ansible_distribution == "RedHat"
+    - name: check apache/httpd response on all managed nodes
+      uri: 
+        url: "{{item}}"
+        status_code: 200    
+      with_items:
+        - http://10.0.1.49
+        - http://10.0.1.155
+        - http://10.0.1.44
+        
+
+

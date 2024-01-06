@@ -1,0 +1,21 @@
+---
+- name: Implementing handelers
+  hosts: all
+  tasks:
+    - name: Install apache2
+      apt:
+        name: apache2
+        state: present
+        update_cache: yes
+    - name: edit index.html file
+      copy:
+        content: "WELCOM TO HOME"
+        dest: /var/www/html/index.html
+      notify: Restart apache2
+  handlers:
+    - name: Restart apache2
+      service:
+        name: apache2
+        state: restarted
+
+    

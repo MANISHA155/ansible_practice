@@ -1,0 +1,32 @@
+---
+- name: configuring apache2
+  hosts: all
+  serial: 
+   - 4
+   - 8
+   - 1  
+  tasks: 
+    - name: install apache2
+      apt:
+        name: apache2
+        state: present
+        update_cache: yes
+    - name: edit the index.html file
+      copy: 
+        content: "intellqit"
+        dest: /var/www/html/index.html
+    - name: restart apache2 
+      service:
+        name: apache2
+        state: restarted
+    - name: check apache response on server1
+      uri: 
+        url: http://10.0.1.155
+        status_code: 200
+    - name: check apache response on server2
+      uri: 
+        url: http://10.0.1.44
+        status_code: 200      
+...
+
+      

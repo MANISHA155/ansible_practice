@@ -1,0 +1,5 @@
+---
+- name: edit index.html file
+  copy: 
+    content: "welcome to Intelliq"
+    dest: /var/www/html/index.html
